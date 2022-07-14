@@ -7,7 +7,7 @@
 # NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor
 
 > A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, C359 - NHS Ambulance Handover Delay Predictor, will use statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
-{PROJECT NAME} was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+C359 - NHS Ambulance Handover Delay Predictorwas selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
 ## Intended Use
 
@@ -19,7 +19,14 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 
 ## Background
 
-_Include a high-level summary of what the problem you are trying to solve is._
+South Central Ambulance Service (SCAS) has around 2.5 million total patient contacts per year across the services of Hampshire, Thames Valley, Surrey and Sussex.  To ensure the delivery of an effective and efficient service, SCAS need to make informed decisions, drawing upon the best possible management information available.
+The decision on where to take ambulance patients is complex taking in factors such as severity of illness, urgency of the situation, geography, travel time and handover/queuing time.  With national targets on handover times and NHS trusts publishing their ability to meet these targets, there is an opportunity to determine if the large volume of electronic data available from patients who have been taken to hospital can be used within Artificial intelligence (AI)/Machine Learning (ML) to predict where patients should be sent to minimise waiting times.  Such techniques are commonly used across industries that provide services or sell goods through, but not limited to: optimising staffing schedules, reducing waiting times (e.g. to answer calls or to be physically seen) and increasing the robustness of a queuing system to the inevitable variation in demand for a service.  
+Looking across an NHS trust, knowing where ambulances can handover patients to inform balancing for care outcomes could potentially improve the performance and safety for both the ambulance trusts and hospitals, whilst also: 
+•	reducing the stress and improve the overall experience for the patient, 
+•	reducing the overall clinical risk as handover from the ambulance to the hospital will happen as quickly as possible
+•	reducing operational pressures on the ambulance service provider by reducing the amount of reactive management, thereby also reducing staffing stress levels
+•	increasing both the hospital and ambulance efficiency – for every patient waiting to be admitted to the hospital, there is an ambulance crew that is not able to attend another call
+
 
 ## Model selection
 
