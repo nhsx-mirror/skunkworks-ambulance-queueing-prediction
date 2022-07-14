@@ -4,10 +4,9 @@
 
 ![Banner of NHS AI Lab Skunkworks ](docs/banner.png)
 
-# NHS AI Lab Skunkworks project: {PROJECT NAME}
+# NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor
 
-> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, {PROJECT NAME} {SHORT DESCRIPTION}
-
+> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, C359 - NHS Ambulance Handover Delay Predictor, will use statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
 {PROJECT NAME} was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
 ## Intended Use
