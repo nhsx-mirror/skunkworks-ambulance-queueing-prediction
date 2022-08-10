@@ -67,24 +67,24 @@ def train_decision_tree_model(ORDINALS, REALS, target_df: pd.DataFrame, feature_
     # takes the subset of the dataframe that contaions the feature variables
     feature_subset = [*ORDINALS.keys(), *REALS]
     
-    # encodes the categorical variables of the feature subset into numbers
+    # Ordinally encodes the categorical variables of the feature subset
     ordinal_encoder = OrdinalEncoder(categories=[v for k, v in ORDINALS.items() if k in feature_subset])
     
-    # converts missing values to zeros
+    # Converts missing values to zeros
     simple_imputer = SimpleImputer(missing_values=np.nan, strategy='constant', fill_value=0)
     
-    # construct a ColumnTransformer from the given transformers
+    # Construct a ColumnTransformer from the given transformers
     preprocessing = make_column_transformer(
         (ordinal_encoder, [k for k, v in ORDINALS.items() if k in feature_subset]),
         (simple_imputer, [k for k in REALS if k in feature_subset]))
     
-    # initialise the model
+    # Initialise the model
     dtr = DecisionTreeRegressor()
     
-    # build the pipeline
+    # Build the pipeline
     pipeline = make_pipeline(preprocessing, dtr)
     
-    # fit the model
+    # Fit the model
     pipeline.fit(feature_df[feature_subset], target_df)
     
     return feature_subset, dtr, preprocessing, pipeline
