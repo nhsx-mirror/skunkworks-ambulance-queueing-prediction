@@ -143,10 +143,8 @@ of the [Open Government 3.0][ogl] licence.
 
 If you want to run through this project end to end, you can do so by executing the following commands. Please note you must ensure your environment is set up as described in Getting Started and all commands below assume the working directory is `skunkworks-ambulance-queueing-prediction/notebooks`
 
-`jupyter nbconvert --to notebook --execute 01-fake-data-generation.ipynb --ExecutePreprocessor.kernel_name=python3
+`jupyter nbconvert --to notebook --execute 01-fake-data-generation.ipynb --ExecutePreprocessor.kernel_name=python3`
 
-jupyter nbconvert --to notebook --execute 02-preparing-data-for-modelling.ipynb --ExecutePreprocessor.kernel_name=python3
+`jupyter nbconvert --to notebook --execute 02-preparing-data-for-modelling.ipynb --ExecutePreprocessor.kernel_name=python3`
 
-jupyter nbconvert --to notebook --execute 03-modelling.ipynb --ExecutePreprocessor.kernel_name=python3
-
-`
+`jupyter nbconvert --to notebook --execute 03-modelling.ipynb --ExecutePreprocessor.kernel_name=python3`
