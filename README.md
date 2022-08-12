@@ -117,6 +117,7 @@ project-directory
 6. __Activate the git pre commit hook: pre-commit install__
 7. Execute notebooks in [notebooks/](notebooks)
 
+Please note that `python v3.9.12` was used for this project.
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
