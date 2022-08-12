@@ -28,11 +28,11 @@ def prepare_train_test_split(df: pd.DataFrame):
         Subsets of the data for the feature and target variables
         which are to be used the training and testing process of the model.
     """
-    # dropping the target variable so that only the feature variables are left
+    # Dropping the target variable so that only the feature variables are left
     feature_variables = df.drop('handover_delay_mins', axis=1)
-    # the target variables
+    # The target variables
     target_variables = df['handover_delay_mins']
-    # splitting the feature and target variables into the training and testing sets
+    # Splitting the feature and target variables into the training and testing sets
     feature_variables_train, feature_variables_test, target_variables_train, target_variables_test = \
         train_test_split(feature_variables, target_variables, test_size=0.20, random_state=0)
     return feature_variables_train, feature_variables_test, target_variables_train, target_variables_test
@@ -93,13 +93,14 @@ def tree_nodes_as_df(clf: BaseDecisionTree, id_offset=0, names=True):
     df: pd.DataFrame
         A df of all the nodes of the tree.
     """
+    
     df = pd.DataFrame({'impurity': clf.tree_.impurity,
                        'child_left': clf.tree_.children_left,
                        'child_right': clf.tree_.children_right,
                        'feature': clf.feature_names_in_[clf.tree_.feature] if names else clf.tree_.feature,
                        'weighted_samples': clf.tree_.weighted_n_node_samples})\
         .rename_axis(index='node').reset_index()
-    # add left and right onto dfs below to know whether it came down left or right
+    # Add left and right onto dfs below to know whether it came down left or right
     df = pd.concat([df.merge(df.add_prefix('parent_'), how='left', left_on='node', right_on=f'parent_child_{lr}')
                     for lr in ('left', 'right')])
     df['node'] = df['node'] + id_offset
@@ -129,21 +130,21 @@ def train_random_forest_model(ORDINALS, REALS, target_df: pd.DataFrame, df: pd.D
     preprocessing: ColumnTransformer for the model input.
     pipeline: The fitted model.
     """
-    # takes the subset of the dataframe that contaions the feature variables
+    # Takes the subset of the dataframe that contaions the feature variables
     feature_subset = [*ORDINALS.keys(), *REALS]
-    # encodes the categorical variables of the feature subset into numbers
+    # Encodes the categorical variables of the feature subset into numbers
     ordinal_encoder = OrdinalEncoder(categories=[v for k, v in ORDINALS.items() if k in feature_subset])
-    # converts missing values to zeros
+    # Converts missing values to zeros
     simple_imputer = SimpleImputer(missing_values=np.nan, strategy='constant', fill_value=0)
-    # construct a ColumnTransformer from the given transformers
+    # Construct a ColumnTransformer from the given transformers
     preprocessing = make_column_transformer(
         (ordinal_encoder, [k for k, v in ORDINALS.items() if k in feature_subset]),
         (simple_imputer, [k for k in REALS if k in feature_subset]))
-    # initialise the model
+    # Initialise the model
     rfr = RandomForestRegressor(oob_score=True, random_state=0, max_depth=5, n_estimators=500)
     # build the pipeline
     pipeline = make_pipeline(preprocessing, rfr)
-    # fit the model
+    # Fit the model
     pipeline.fit(df[feature_subset], target_df)
     return feature_subset, rfr, preprocessing, pipeline
 
@@ -163,9 +164,13 @@ def forest_nodes_as_df(clf: BaseForest, names=True) -> pd.DataFrame:
     df: pd.DataFrame
         A df of all the characteristics of the nodes.
     """
+    # The node ID within each tree starts from 0
+    # In output of decision path, the node ID is unique across the forest
+    # Add the id_offset to make these match up
     id_offset = 0
     tree: BaseDecisionTree
     dfs = []
+    # Loops through each of the trees inspecting their nodes
     for tree in clf.estimators_:
         dfs.append(tree_nodes_as_df(tree, id_offset=id_offset, names=False))
         id_offset += tree.tree_.node_count
@@ -202,7 +207,7 @@ def loop_decision_tree_model(ORDINALS,
     RESULTS_DICT: dict
         A dict of all the prediction results and the important features as well.
         """
-    # initialising empty results dict
+    # Initialising empty results dict
     RESULTS_DICT = {'actual': [],
                     'predicted_3': [],
                     'predicted_10': [],
@@ -210,35 +215,35 @@ def loop_decision_tree_model(ORDINALS,
                     'important_features_3': [],
                     'important_features_10': [],
                     'important_features_24': []}
-    # initialising results df
+    # Initialising results df
     RESULTS_DF = pd.DataFrame()
     for hospital in list_of_hospitals:
         df_temp = pd.DataFrame()
         for hour, df_X in datasets_dict.items():
             print(f"Hospital: {hospital}, Hour: {hour}, Starting modelling...")
-            # take subset of data for the hospital for modelling
+            # Take subset of data for the hospital for modelling
             hospital_subset = df_X[df_X.hospital == hospital]
-            # train-test split
+            # Train-test split
             feature_variables_train, feature_variables_test, target_variables_train, target_variables_test = \
                 prepare_train_test_split(hospital_subset)
-            # run model
+            # Run model
             feature_subset, dtr, preprocessed, tree_model = \
                 train_decision_tree_model(ORDINALS,
                                           REALS,
                                           target_variables_train,
                                           feature_variables_train[[*ORDINALS.keys(),
                                                                    *REALS]])
-            # get prediction
+            # Get prediction
             target_variables_pred = tree_model.predict(feature_variables_test[[*ORDINALS.keys(), *REALS]])
-            # actual values
+            # Actual values
             target_variables_actual = target_variables_test.values
-            # add the results to the temporary table
+            # Add the results to the temporary table
             df_temp.loc[hospital, 'pred_' + hour] = target_variables_pred[-1]
             df_temp.loc[hospital, 'mean_absolute_error_' + hour] = mean_absolute_error(target_variables_pred,
                                                                                        target_variables_test)
             df_temp.loc[hospital, 'root_mean_squared_error_' + hour] = sqrt(mean_squared_error(target_variables_pred,
                                                                                                target_variables_test))
-            # codes to make scatter plot for y_pred and y_test (just to view how the scatter plots)
+            # Codes to make scatter plot for y_pred and y_test (just to view how the scatter plots)
             fontsize = 16
             plt.scatter(target_variables_test, target_variables_pred)
             plt.title(f"Hospital: {hospital}; Hour: {hour}-hours", fontsize=fontsize)
@@ -247,7 +252,7 @@ def loop_decision_tree_model(ORDINALS,
             plt.xticks(fontsize=fontsize - 2, rotation=20)
             plt.yticks(fontsize=fontsize - 2, rotation=20)
             plt.show()
-            # update the results dict
+            # Update the results dict
             if hour == '3':
                 RESULTS_DICT['actual'].append(target_variables_actual[-1])
             if hour == '3':
@@ -270,7 +275,7 @@ def loop_decision_tree_model(ORDINALS,
                                                       feature_subset,
                                                       3,
                                                       hour)
-        # update the results dataframe
+        # Update the results dataframe
         RESULTS_DF = RESULTS_DF.append(df_temp)
         RESULTS_DF = RESULTS_DF.round(2)
     return RESULTS_DF, RESULTS_DICT
@@ -303,7 +308,7 @@ def loop_random_forest_model(ORDINALS,
     RESULTS_DICT: dict
         A dict of all the prediction results and the important features as well.
     """
-    # initialising empty results dict
+    # Initialising empty results dict
     RESULTS_DICT = {'actual': [],
                     'predicted_3': [],
                     'predicted_10': [],
@@ -311,34 +316,34 @@ def loop_random_forest_model(ORDINALS,
                     'important_features_3': [],
                     'important_features_10': [],
                     'important_features_24': []}
-    # initialising results df
+    # Initialising results df
     RESULTS_DF = pd.DataFrame()
     for hospital in list_of_hospitals:
         df_temp = pd.DataFrame()
         for hour, df_X in datasets_dict.items():
             print(f"Hospital: {hospital}, Hour: {hour}, Starting modelling...")
-            # take subset of data for the hospital for modelling
+            # Take subset of data for the hospital for modelling
             hospital_subset = df_X[df_X.hospital == hospital]
-            # train-test split
+            # Train-test split
             feature_variables_train, feature_variables_test, target_variables_train, target_variables_test = \
                 prepare_train_test_split(hospital_subset)
-            # run model
+            # Run model
             feature_subset, rfr, preprocessed, forest_model = \
                 train_random_forest_model(ORDINALS,
                                           REALS,
                                           target_variables_train,
                                           feature_variables_train[[*ORDINALS.keys(),
                                                                    *REALS]])
-            # get prediction
+            # Get prediction
             target_variables_pred = forest_model.predict(feature_variables_test[[*ORDINALS.keys(), *REALS]])
-            # actual values
+            # Actual values
             target_variables_actual = target_variables_test.values
             df_temp.loc[hospital, 'pred_' + hour] = target_variables_pred[-1]
             df_temp.loc[hospital, 'mean_absolute_error_' + hour] = mean_absolute_error(target_variables_pred,
                                                                                        target_variables_test)
             df_temp.loc[hospital, 'root_mean_squared_error_' + hour] = sqrt(mean_squared_error(target_variables_pred,
                                                                                                target_variables_test))
-            # codes to make scatter plot for y_pred and y_test
+            # Codes to make scatter plot for y_pred and y_test
             fontsize = 16
             plt.scatter(target_variables_test, target_variables_pred)
             plt.title(f"Hospital: {hospital}; Hour: {hour}-hours", fontsize=fontsize)
@@ -347,7 +352,7 @@ def loop_random_forest_model(ORDINALS,
             plt.xticks(fontsize=fontsize - 2, rotation=20)
             plt.yticks(fontsize=fontsize - 2, rotation=20)
             plt.show()
-            # update the results dict
+            # Update the results dict
             if hour == '3':
                 RESULTS_DICT['actual'].append(target_variables_actual[-1])
             if hour == '3':
@@ -359,7 +364,7 @@ def loop_random_forest_model(ORDINALS,
             if feature_importance:
                 print(f"Hospital: {hospital}, Hour: {hour}, Getting important features...")
                 print()
-                # to get n most important features: n=3 here
+                # To get n most important features: n=3 here
                 RESULTS_DICT = get_important_features('random forest',
                                                       RESULTS_DICT,
                                                       feature_variables_test,
@@ -370,7 +375,7 @@ def loop_random_forest_model(ORDINALS,
                                                       feature_subset,
                                                       3,
                                                       hour)
-        # update the results dataframe
+        # Update the results dataframe
         RESULTS_DF = RESULTS_DF.append(df_temp)
         RESULTS_DF = RESULTS_DF.round(2)
     return RESULTS_DF, RESULTS_DICT
@@ -421,7 +426,9 @@ def get_important_features(model_name: str,
     if 'forest' in model_name.lower().replace(' ', ''):
         df = forest_nodes_as_df(regressor_variable, names=False).join(dp)
     elif 'tree' in model_name.lower().replace(' ', ''):
+        # Joining the tree nodes to the decision path
         df = tree_nodes_as_df(regressor_variable, names=False).join(dp)
+    # Calculating the feature importance
     df['feature_importance'] = (df['parent_impurity'] - df['impurity']) * df['weighted_samples']
     df_features = pd.DataFrame([enum, feature] for enum, feature in enumerate(feature_subset)) \
         .rename(columns={0: 'parent_feature',
@@ -430,7 +437,7 @@ def get_important_features(model_name: str,
     df_grouped = df.groupby(['observation', 'parent_feature_name']).sum().sort_values(['observation',
                                                                                        'feature_importance'],
                                                                                       ascending=[True, False])
-    # n most important features: n=3
+    # n most important features: n=3 (Selecting the three features that cause the largest decrease in impurity)
     n_largest = df_grouped.groupby('observation')['feature_importance'].nlargest(n_important_features)
     important_feature_df = n_largest.iloc[-3:].to_frame()
     important_features = np.array([important_feature_df.index[i][2] for i, v in enumerate(important_feature_df.index)])

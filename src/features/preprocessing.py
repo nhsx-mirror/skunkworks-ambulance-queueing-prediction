@@ -63,8 +63,8 @@ def past_events(cleaned_assignments: pd.DataFrame, cleaned_incidents: pd.DataFra
     num_amb_arrivals = df.groupby(['hospital', 'time']).size().to_frame('num_ambulance_arrivals')
 
     # Calculating the number of ambulance leaving the queue by using time handover and time clear when HALOing occurs
-    num_amb_depatures = df.groupby(['hospital', 'time_amb_left_queue']).size().to_frame('num_ambulance_depatures')
-    num_amb_depatures = num_amb_depatures.reset_index() \
+    num_amb_departures = df.groupby(['hospital', 'time_amb_left_queue']).size().to_frame('num_ambulance_departures')
+    num_amb_departures = num_amb_departures.reset_index() \
         .rename(columns={'time_amb_left_queue': 'time'}).set_index(['hospital', 'time'])
     # Pivots data to get the number of people in each age band arriving at the hospital at each timestamp
     age_band = df[['time', 'hospital', 'age_band']]
@@ -109,7 +109,7 @@ def past_events(cleaned_assignments: pd.DataFrame, cleaned_incidents: pd.DataFra
                                          age_band,
                                          responding_priority,
                                          num_patients_transported,
-                                         num_amb_depatures], how='outer')
+                                         num_amb_departures], how='outer')
     past_events = past_events.reset_index()
     return past_events
 
@@ -191,7 +191,7 @@ def rolling_sums_and_means(hospital: str,
                      'missing_skill_D': ['sum'],
                      'missing_skill_E': ['sum'],
                      'num_ambulance_arrivals': ['sum'],
-                     'num_ambulance_depatures': ['sum'],
+                     'num_ambulance_departures': ['sum'],
                      'flow': ['sum'],
                      'past_delay_mins': ['mean'],
                      'weighted_arrivals_other': ['sum'],
