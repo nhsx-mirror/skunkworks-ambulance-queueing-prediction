@@ -7,6 +7,7 @@
 
 ### Data ###
 *.csv
+!bank_holiday_data_1953_to_1954.csv
 *.dat
 *.efx
 *.gbr
