@@ -12,6 +12,7 @@
 *.efx
 *.gbr
 *.key
+*.parquet
 *.pps
 *.ppt
 *.pptx
