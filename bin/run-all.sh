@@ -3,7 +3,7 @@
 export PYTHONPATH=$PWD/src
 
 echo "Generating fake data..."
-jupyter nbconvert --to notebook --execute notebooks/01-fake-data-generation.ipynb.ipynb --log-level=WARN > /dev/null
+jupyter nbconvert --to notebook --execute notebooks/01-fake-data-generation.ipynb --log-level=WARN > /dev/null
 echo "Fake data saved to output directory"
 
 echo "Preparing data for modelling..."
