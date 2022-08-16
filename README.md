@@ -84,34 +84,28 @@ The directory structure of this project includes data stored outside of the git 
 
 A `project-directory` must first be created, inside of which this repository can be cloned (into e.g. `repo-directory`).
 
-`data` and `models` folders will be stored at the highest level, outside the git tree, and must be created manually first, including the subdirectories `data/interim`, `data/processed` and `data/raw`:
-
-![PNG of Directory Structure](docs/to-add-directory-structure.bays)
+```
+repo-directory
+|__skunkworks-ambulance-queueing-prediction
+|    |__.github
+|    |__bin
+|    |__docs
+|    |__notebooks
+|    |__outputs
+|    |__src
+|    |   |__data
+|    |   |__features
+|    |   |__models
+|    |   |__visualisations
+|____|__requirements.txt
 
 ```
-e.g., (Needs to be changed)
-project-directory
-├── repo-directory
-│   ├── .git
-│   ├── .github
-│   ├── config
-│   ├── docs
-│   ├── notebooks
-│   ├── outputs
-│   └── src
-├── data
-│   ├── interim
-│   ├── processed
-│   └── raw
-└── models
-```
-
 
 ## Getting Started
 
 1. Create a folder for this project, and clone this repository (`https://github.com/nhsx/skunkworks-ambulance-queueing-prediction`) as a subfolder of that folder e.g. `repo-directory` as above
 2. Switch to the `develop` branch: `git branch develop`
-3. Create a new virtual environment e.g., `pyenv virtualenv 3.8.13 ambulance-delays-project`
+3. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
 4. Activate your environment e.g., `pyenv activate ambulance-delays-project`
 5. Install required packages: `pip install -r requirements.txt`
 6. __Activate the git pre commit hook: pre-commit install__
@@ -142,10 +136,4 @@ of the [Open Government 3.0][ogl] licence.
 
 ## End to End Testing
 
-If you want to run through this project end to end, you can do so by executing the following commands. Please note you must ensure your environment is set up as described in Getting Started and all commands below assume the working directory is `skunkworks-ambulance-queueing-prediction/notebooks`
-
-`jupyter nbconvert --to notebook --execute 01-fake-data-generation.ipynb --ExecutePreprocessor.kernel_name=python3`
-
-`jupyter nbconvert --to notebook --execute 02-preparing-data-for-modelling.ipynb --ExecutePreprocessor.kernel_name=python3`
-
-`jupyter nbconvert --to notebook --execute 03-modelling.ipynb --ExecutePreprocessor.kernel_name=python3`
+If you want to run through this project end-to-end, details on how to do this can be found in the bin directory.
