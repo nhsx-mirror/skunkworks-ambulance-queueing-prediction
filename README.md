@@ -113,6 +113,11 @@ repo-directory
 
 Please note that `python v3.9.12` was used for this project.
 
+### End to End Testing
+
+If you want to run through this project end-to-end, details on how to do this can be found in the [bin](bin/) directory.
+
+
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
 
@@ -134,6 +139,3 @@ of the [Open Government 3.0][ogl] licence.
 [ogl]: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
 
 
-## End to End Testing
-
-If you want to run through this project end-to-end, details on how to do this can be found in the bin directory.
