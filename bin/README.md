@@ -1,6 +1,6 @@
 # Integration testing
 
-Once you have instaalled this tool and activated your virtual environment, you can execute an end-to-end integration test by running from the main project directory.
+Once you have installed this tool and activated your virtual environment, you can execute an end-to-end integration test by running from the main project directory.
 
 If using PowerShell:
 
