@@ -1,4 +1,3 @@
-# from datetime import timedelta
 from math import sqrt
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,7 +30,7 @@ def prepare_train_test_split(df: pd.DataFrame):
     # Dropping the target variable so that only the feature variables are left
     feature_variables = df.drop('handover_delay_mins', axis=1)
     # The target variables
-    target_variables = df['handover_delay_mins']
+    target_variables = df[['time', 'handover_delay_mins']]
     # Splitting the feature and target variables into the training and testing sets
     feature_variables_train, feature_variables_test, target_variables_train, target_variables_test = \
         train_test_split(feature_variables, target_variables, test_size=0.20, random_state=0)
@@ -142,10 +141,10 @@ def train_random_forest_model(ORDINALS, REALS, target_df: pd.DataFrame, df: pd.D
         (simple_imputer, [k for k in REALS if k in feature_subset]))
     # Initialise the model
     rfr = RandomForestRegressor(oob_score=True, random_state=0, n_estimators=100)
-    # build the pipeline
+    # Build the pipeline
     pipeline = make_pipeline(preprocessing, rfr)
     # Fit the model
-    pipeline.fit(df[feature_subset], target_df)
+    pipeline.fit(df[feature_subset], target_df['handover_delay_mins'])
     return feature_subset, rfr, preprocessing, pipeline
 
 
@@ -184,7 +183,8 @@ def loop_decision_tree_model(ORDINALS,
                              REALS,
                              datasets_dict: dict,
                              list_of_hospitals: list,
-                             feature_importance: bool = True):
+                             feature_importance: bool = True,
+                             get_scatter_plots: bool = False):
     """
     Runs a Decision Tree model for each hospital, for each of the 3-, 10-, and 24-hours predictions.
     Parameters
@@ -200,6 +200,8 @@ def loop_decision_tree_model(ORDINALS,
         A list of all required hospital names
     feature_importance: bool
         Whether to extract the important features as well. Set to True by default.
+    get_scatter_plots: bool
+        Whether to print out the scatter plots. Set to False by default.
     Return
     ------
     RESULTS_DF: pd.DataFrame
@@ -214,7 +216,10 @@ def loop_decision_tree_model(ORDINALS,
                     'predicted_24': [],
                     'important_features_3': [],
                     'important_features_10': [],
-                    'important_features_24': []}
+                    'important_features_24': [],
+                    'important_features_3_value': [],
+                    'important_features_10_value': [],
+                    'important_features_24_value': []}
     # Initialising results df
     RESULTS_DF = pd.DataFrame()
     for hospital in list_of_hospitals:
@@ -244,14 +249,22 @@ def loop_decision_tree_model(ORDINALS,
             df_temp.loc[hospital, 'root_mean_squared_error_' + hour] = sqrt(mean_squared_error(target_variables_pred,
                                                                                                target_variables_test))
             # Codes to make scatter plot for y_pred and y_test (just to view how the scatter plots)
-            fontsize = 16
-            plt.scatter(target_variables_test, target_variables_pred)
-            plt.title(f"Hospital: {hospital}; Hour: {hour}-hours", fontsize=fontsize)
-            plt.xlabel("Actual Handover delay (minutes)", fontsize=fontsize)
-            plt.ylabel("Predicted Handover delay (minutes)", fontsize=fontsize)
-            plt.xticks(fontsize=fontsize - 2, rotation=20)
-            plt.yticks(fontsize=fontsize - 2, rotation=20)
-            plt.show()
+            if get_scatter_plots:
+                fontsize = 16
+                fig, ax = plt.subplots()
+                ax.scatter(target_variables_test, target_variables_pred, alpha=0.5)
+                lims = [
+                    np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+                    np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+                    ]
+                # Now plot both limits against eachother
+                ax.plot(lims, lims, '--', alpha=0.75, zorder=0, c='g')
+                plt.title(f"{hospital} for {hour}-hours", fontsize=fontsize)
+                plt.xlabel("Actual delays (minutes)", fontsize=fontsize)
+                plt.ylabel("Predicted delays (minutes)", fontsize=fontsize)
+                plt.xticks(fontsize=fontsize - 2, rotation=20)
+                plt.yticks(fontsize=fontsize - 2, rotation=20)
+                plt.show()
             # Update the results dict
             if hour == '3':
                 RESULTS_DICT['actual'].append(target_variables_actual[-1])
@@ -264,7 +277,7 @@ def loop_decision_tree_model(ORDINALS,
             if feature_importance:
                 print(f"Hospital: {hospital}, Hour: {hour}, Getting important features...")
                 print()
-                # to get n important features: n=3 here
+                # To get n important features: n=3 here
                 RESULTS_DICT = get_important_features('decision tree',
                                                       RESULTS_DICT,
                                                       feature_variables_test,
@@ -285,7 +298,8 @@ def loop_random_forest_model(ORDINALS,
                              REALS,
                              datasets_dict: dict,
                              list_of_hospitals: list,
-                             feature_importance: bool = True):
+                             feature_importance: bool = True,
+                             get_scatter_plots: bool = False):
     """
     Runs a Random Forest model for each hospital, for each of the 3-, 10-, and 24-hours predictions.
     Parameters
@@ -301,6 +315,8 @@ def loop_random_forest_model(ORDINALS,
         A list of all required hospital names
     feature_importance: bool
         Whether to extract the important features as well. Set to True by default.
+    get_scatter_plots: bool
+        Whether to print out the scatter plots. Set to False by default.
     Return
     ------
     RESULTS_DF: pd.DataFrame
@@ -335,36 +351,108 @@ def loop_random_forest_model(ORDINALS,
                                           feature_variables_train[[*ORDINALS.keys(),
                                                                    *REALS]])
             # Get prediction
-            target_variables_pred = forest_model.predict(feature_variables_test[[*ORDINALS.keys(), *REALS]])
+            # Using training data
+            target_variables_pred_train_data = forest_model.predict(feature_variables_train[[*ORDINALS.keys(), *REALS]])
+            # Using test data
+            target_variables_pred_test_data = forest_model.predict(feature_variables_test[[*ORDINALS.keys(), *REALS]])
             # Actual values
             target_variables_actual = target_variables_test.values
-            df_temp.loc[hospital, 'pred_' + hour] = target_variables_pred[-1]
-            df_temp.loc[hospital, 'mean_absolute_error_' + hour] = mean_absolute_error(target_variables_pred,
-                                                                                       target_variables_test)
-            df_temp.loc[hospital, 'root_mean_squared_error_' + hour] = sqrt(mean_squared_error(target_variables_pred,
-                                                                                               target_variables_test))
-            # Codes to make scatter plot for y_pred and y_test
-            fontsize = 16
-            plt.scatter(target_variables_test, target_variables_pred)
-            plt.title(f"Hospital: {hospital}; Hour: {hour}-hours", fontsize=fontsize)
-            plt.xlabel("Actual Handover delay (minutes)", fontsize=fontsize)
-            plt.ylabel("Predicted Handover delay (minutes)", fontsize=fontsize)
-            plt.xticks(fontsize=fontsize - 2, rotation=20)
-            plt.yticks(fontsize=fontsize - 2, rotation=20)
-            plt.show()
+            df_temp.loc[hospital, 'pred_' + hour] = target_variables_pred_test_data[-1]
+            df_temp.loc[hospital, 'mean_absolute_error_' + hour] = mean_absolute_error(target_variables_pred_test_data,
+                                                                                       target_variables_test['handover_delay_mins'])
+            df_temp.loc[hospital, 'root_mean_squared_error_' + hour] = sqrt(mean_squared_error(target_variables_pred_test_data,
+                                                                                               target_variables_test['handover_delay_mins']))
+            
+            # Getting the daily dfs
+            # For test data
+            target_variables_test['prediction_test'] = target_variables_pred_test_data
+            target_variables_test_daily = target_variables_test.groupby(target_variables_test.time.dt.floor('d')).mean()
+            
+            # For train data
+            target_variables_train['prediction_train'] = target_variables_pred_train_data
+            target_variables_train_daily = target_variables_train.groupby(target_variables_train.time.dt.floor('d')).mean()
+            
+            
+            # Codes to make scatter plot for y_pred and y_test 
+            if get_scatter_plots:
+                fontsize = 16
+                # print("The scatter plot for the predictions from the testing data:")
+                # fig, ax = plt.subplots(figsize=(10, 8))
+                # ax.scatter(target_variables_test['handover_delay_mins'], target_variables_pred_test_data, alpha=0.5)
+                # lims = [
+                #     np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+                #     np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+                #     ]
+                # # Now plot both limits against eachother
+                # ax.plot(lims, lims, '--', alpha=0.75, zorder=0, c='g')
+                # plt.title(f"{hospital} {hour}-hour Predictions (Testing Data)", fontsize=fontsize)
+                # plt.xlabel("Actual Delays (minutes)", fontsize=fontsize)
+                # plt.ylabel("Predicted Delays (minutes)", fontsize=fontsize)
+                # plt.xticks(fontsize=fontsize - 2, rotation=20)
+                # plt.yticks(fontsize=fontsize - 2, rotation=20)
+                # plt.show()
+                
+                # print("The scatter plot for the predictions from the training data:")
+                # fig, ax = plt.subplots(figsize=(10, 8))
+                # ax.scatter(target_variables_train['handover_delay_mins'], target_variables_pred_train_data, alpha=0.5)
+                # lims = [
+                #     np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+                #     np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+                #     ]
+                # # Now plot both limits against eachother
+                # ax.plot(lims, lims, '--', alpha=0.75, zorder=0, c='g')
+                # plt.title(f"{hospital} {hour}-hour Predictions (Training Data)", fontsize=fontsize)
+                # plt.xlabel("Actual delays (minutes)", fontsize=fontsize)
+                # plt.ylabel("Predicted delays (minutes)", fontsize=fontsize)
+                # plt.xticks(fontsize=fontsize - 2, rotation=20)
+                # plt.yticks(fontsize=fontsize - 2, rotation=20)
+                # plt.show()
+                
+                print("The scatter plot for the daily mean predictions from the testing data:")
+                fig, ax = plt.subplots(figsize=(10, 8))
+                ax.scatter(target_variables_test_daily['handover_delay_mins'], target_variables_test_daily['prediction_test'], alpha=0.5)
+                lims = [
+                    np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+                    np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+                    ]
+                # Now plot both limits against eachother
+                ax.plot(lims, lims, '--', alpha=0.75, zorder=0, c='g')
+                plt.title(f"{hospital} {hour}-hour Predictions (Testing Data)", fontsize=fontsize)
+                plt.xlabel("Average Daily Actual Delays (minutes)", fontsize=fontsize)
+                plt.ylabel("Average Daily Predicted Delays (minutes)", fontsize=fontsize)
+                plt.xticks(fontsize=fontsize - 2, rotation=20)
+                plt.yticks(fontsize=fontsize - 2, rotation=20)
+                plt.show()
+                
+                # print("The scatter plot for the daily mean predictions from the training data:")
+                # fig, ax = plt.subplots(figsize=(10, 8))
+                # ax.scatter(target_variables_train_daily['handover_delay_mins'], target_variables_train_daily['prediction_train'], alpha=0.5)
+                # lims = [
+                #     np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+                #     np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+                #     ]
+                # # Now plot both limits against eachother
+                # ax.plot(lims, lims, '--', alpha=0.75, zorder=0, c='g')
+                # plt.title(f"{hospital} {hour}-hour Predictions (Training Data)", fontsize=fontsize)
+                # plt.xlabel("Average Daily Actual Delays (minutes)", fontsize=fontsize)
+                # plt.ylabel("Average Daily Predicted Delays (minutes)", fontsize=fontsize)
+                # plt.xticks(fontsize=fontsize - 2, rotation=20)
+                # plt.yticks(fontsize=fontsize - 2, rotation=20)
+                # plt.show()
+                
             # Update the results dict
             if hour == '3':
                 RESULTS_DICT['actual'].append(target_variables_actual[-1])
             if hour == '3':
-                RESULTS_DICT['predicted_3'].append(target_variables_pred[-1])
+                RESULTS_DICT['predicted_3'].append(target_variables_pred_test_data[-1])
             elif hour == '10':
-                RESULTS_DICT['predicted_10'].append(target_variables_pred[-1])
+                RESULTS_DICT['predicted_10'].append(target_variables_pred_test_data[-1])
             elif hour == '24':
-                RESULTS_DICT['predicted_24'].append(target_variables_pred[-1])
+                RESULTS_DICT['predicted_24'].append(target_variables_pred_test_data[-1])
             if feature_importance:
                 print(f"Hospital: {hospital}, Hour: {hour}, Getting important features...")
                 print()
-                # To get n most important features: n=3 here
+                # to get n most important features: n=3 here
                 RESULTS_DICT = get_important_features('random forest',
                                                       RESULTS_DICT,
                                                       feature_variables_test,
