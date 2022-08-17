@@ -34,7 +34,7 @@ Looking across an NHS trust, knowing where ambulances can handover patients to i
 - increasing both the hospital and ambulance efficiency – for every patient waiting to be admitted to the hospital, there is an ambulance crew that is not able to attend another call
 
 
-## Model selection
+## Model Selection
 
 The data available for this project included:
 1. details about incidents which an ambulance had attended, 
@@ -62,7 +62,7 @@ The Random Forest algorithm consists of multiple Decision Trees. We can get pred
 
 Overall, out of the five models considered, the Random Forest model gave the best trade-off between accuracy and interpretability, giving us predictions for both the handover delay and the potential reasons for such delay.
 
-## Known limitations
+## Known Limitations
 
 There were multiple limitations that were faced over the course of this project. Some of them were:
 1. No data was available about the state of the hospitals themselves at the times available in the data.
@@ -75,13 +75,13 @@ This can be reviewed so that more data is available for analysis in the future.
 The number of data points available for the different hospitals varied a lot in the hospitals. A subset of the most significant hospitals was used for the project.
 
 
-## Data pipeline
+## Data Pipeline
 
 ![Data Pipeline for the modelling](docs/data_pipeline_c359.png)
 The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
 
-## Directory structure
+## Directory Structure
 
 A `project-directory` must first be created, inside of which this repository can be cloned (into e.g. `repo-directory`).
 
