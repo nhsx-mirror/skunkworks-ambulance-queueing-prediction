@@ -141,7 +141,7 @@ def train_random_forest_model(ORDINALS, REALS, target_df: pd.DataFrame, df: pd.D
         (ordinal_encoder, [k for k, v in ORDINALS.items() if k in feature_subset]),
         (simple_imputer, [k for k in REALS if k in feature_subset]))
     # Initialise the model
-    rfr = RandomForestRegressor(oob_score=True, random_state=0, max_depth=5, n_estimators=500)
+    rfr = RandomForestRegressor(oob_score=True, random_state=0, n_estimators=100)
     # build the pipeline
     pipeline = make_pipeline(preprocessing, rfr)
     # Fit the model
