@@ -84,9 +84,7 @@ The number of data points available for the different hospitals varied a lot in 
 The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
 
-## Directory Structure
-
-A `project-directory` must first be created, inside of which this repository can be cloned (into e.g. `repo-directory`).
+## Directory Structure4
 
 ```
 skunkworks-ambulance-queueing-prediction
@@ -106,13 +104,13 @@ skunkworks-ambulance-queueing-prediction
 
 ## Getting Started
 
-1. Create a folder for this project, and clone this repository (`https://github.com/nhsx/skunkworks-ambulance-queueing-prediction`) as a subfolder of that folder e.g. `repo-directory` as above
-2. Switch to the `develop` branch: `git branch develop`
-3. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
-4. Activate your environment e.g., `pyenv activate ambulance-delays-project`
-5. Install required packages: `pip install -r requirements.txt`
-6. __Activate the git pre commit hook: pre-commit install__
-7. Execute notebooks in [notebooks/](notebooks)
+
+1. Switch to the `develop` branch: `git branch develop`
+2. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
+3. Activate your environment e.g., `pyenv activate ambulance-delays-project`
+4. Install required packages: `pip install -r requirements.txt`
+5. __Activate the git pre commit hook: pre-commit install__
+6. Execute notebooks in [notebooks/](notebooks)
 
 Please note that `python v3.9.12` was used for this project.
 
