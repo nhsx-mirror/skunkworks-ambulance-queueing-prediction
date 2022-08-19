@@ -7,14 +7,15 @@
 # NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor
 
 > A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, C359 - NHS Ambulance Handover Delay Predictor, will use statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
-C359 - NHS Ambulance Handover Delay Predictorwas selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+C359 - NHS Ambulance Handover Delay Predictor was selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
 ## Intended Use
 
 This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate the technical validity of applying a Random Forest modelling technique to numerous datasets in order to solve the problem of ambulance delays while handing patients over to the emergency departments at hospitals. The data that were available for the project were:
-1. ambulance assignments data
-2. incidents data
-3. patient transfers data
+1. Ambulance assignments data
+2. Incidents data
+3. Patient transfers data
+
 It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
 
 
@@ -26,7 +27,9 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 ## Background
 
 South Central Ambulance Service (SCAS) has around 2.5 million total patient contacts per year across the services of Hampshire, Thames Valley, Surrey and Sussex.  To ensure the delivery of an effective and efficient service, SCAS need to make informed decisions, drawing upon the best possible management information available.
+
 The decision on where to take ambulance patients is complex taking in factors such as severity of illness, urgency of the situation, geography, travel time and handover/queuing time.  With national targets on handover times and NHS trusts publishing their ability to meet these targets, there is an opportunity to determine if the large volume of electronic data available from patients who have been taken to hospital can be used within Artificial intelligence (AI)/Machine Learning (ML) to predict where patients should be sent to minimise waiting times.  Such techniques are commonly used across industries that provide services or sell goods through, but not limited to: optimising staffing schedules, reducing waiting times (e.g. to answer calls or to be physically seen) and increasing the robustness of a queuing system to the inevitable variation in demand for a service.  
+
 Looking across an NHS trust, knowing where ambulances can handover patients to inform balancing for care outcomes could potentially improve the performance and safety for both the ambulance trusts and hospitals, whilst also: 
 - reducing the stress and improve the overall experience for the patient
 - reducing the overall clinical risk as handover from the ambulance to the hospital will happen as quickly as possible
