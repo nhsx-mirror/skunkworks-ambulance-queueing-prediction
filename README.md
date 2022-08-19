@@ -7,14 +7,28 @@
 # NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor
 
 > A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, C359 - NHS Ambulance Handover Delay Predictor, will use statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
-C359 - NHS Ambulance Handover Delay Predictorwas selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+
+C359 - NHS Ambulance Handover Delay Predictor was selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+
+# Table of contents
+- [NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor](#nhs-ai-lab-skunkworks-project-c359---nhs-ambulance-handover-delay-predictor)
+    - [Intended Use](#intended-use)
+    - [Data Protection](#data-protection)
+    - [Background](#background)
+    - [Model Selection](#model-selection)
+    - [Known Limitations](#known-limitations)
+    - [Getting Started](#getting-started)
+    - [NHS AI Lab Skunkworks](#nhs-ai-lab-skunkworks)
+    - [Licence](#licence)
+
 
 ## Intended Use
 
 This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate the technical validity of applying a Random Forest modelling technique to numerous datasets in order to solve the problem of ambulance delays while handing patients over to the emergency departments at hospitals. The data that were available for the project were:
-1. ambulance assignments data
-2. incidents data
-3. patient transfers data
+1. Ambulance assignments data
+2. Incidents data
+3. Patient transfers data
+
 It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
 
 
@@ -26,26 +40,17 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 ## Background
 
 South Central Ambulance Service (SCAS) has around 2.5 million total patient contacts per year across the services of Hampshire, Thames Valley, Surrey and Sussex.  To ensure the delivery of an effective and efficient service, SCAS need to make informed decisions, drawing upon the best possible management information available.
+
 The decision on where to take ambulance patients is complex taking in factors such as severity of illness, urgency of the situation, geography, travel time and handover/queuing time.  With national targets on handover times and NHS trusts publishing their ability to meet these targets, there is an opportunity to determine if the large volume of electronic data available from patients who have been taken to hospital can be used within Artificial intelligence (AI)/Machine Learning (ML) to predict where patients should be sent to minimise waiting times.  Such techniques are commonly used across industries that provide services or sell goods through, but not limited to: optimising staffing schedules, reducing waiting times (e.g. to answer calls or to be physically seen) and increasing the robustness of a queuing system to the inevitable variation in demand for a service.  
+
 Looking across an NHS trust, knowing where ambulances can handover patients to inform balancing for care outcomes could potentially improve the performance and safety for both the ambulance trusts and hospitals, whilst also: 
-- reducing the stress and improve the overall experience for the patient
-- reducing the overall clinical risk as handover from the ambulance to the hospital will happen as quickly as possible
-- reducing operational pressures on the ambulance service provider by reducing the amount of reactive management, thereby also reducing staffing stress levels
-- increasing both the hospital and ambulance efficiency – for every patient waiting to be admitted to the hospital, there is an ambulance crew that is not able to attend another call
+- Reducing the stress and improve the overall experience for the patient
+- Reducing the overall clinical risk as handover from the ambulance to the hospital will happen as quickly as possible
+- Reducing operational pressures on the ambulance service provider by reducing the amount of reactive management, thereby also reducing staffing stress levels
+- Increasing both the hospital and ambulance efficiency – for every patient waiting to be admitted to the hospital, there is an ambulance crew that is not able to attend another call
 
 
 ## Model Selection
-
-The data available for this project included:
-1. details about incidents which an ambulance had attended, 
-2. details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
-3. details about patient transfers in, out and between hospitals
-
-The additional datasets that were used for the project included:
-1. UK Bank holidays data
-2. Weather data - Minimum temperature, Maximum temperature, Rainfall (mm)
-
-The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling . 
 
 The different approaches considered were as follows:
 1. Regression techniques
@@ -65,59 +70,75 @@ Overall, out of the five models considered, the Random Forest model gave the bes
 ## Known Limitations
 
 There were multiple limitations that were faced over the course of this project. Some of them were:
-1. No data was available about the state of the hospitals themselves at the times available in the data.
-This made it hard to identify whether there were some internal factors in the hospitals which were contributing to the ambulance delays. For example, staff sicknesses. 
-2. The pre-processing stages of this analysis are designed to work on the format that the `Assignments dataset`, `Incidents dataset`, and `PTS dataset` were available for the project. 
-If different datasets are to be used, or if the structure of the datasets have changed, the code will need modifying so as to ensure the smooth running of the code.
-3. The exclusion of non-emergency incidents from the dataset reduced the available data by more than 50%.
-This can be reviewed so that more data is available for analysis in the future.
-4. Disparity in the number of data points for the different hospitals.
-The number of data points available for the different hospitals varied a lot in the hospitals. A subset of the most significant hospitals was used for the project.
+1. No data was available about the state of the hospitals themselves at the times available in the data. This made it hard to identify whether there were some internal factors in the hospitals which were contributing to the ambulance delays. For example, staff sicknesses. 
+2. The pre-processing stages of this analysis are designed to work on the format that the `Assignments dataset`, `Incidents dataset`, and `PTS dataset` were available for the project. If different datasets are to be used, or if the structure of the datasets have changed, the code will need modifying so as to ensure the smooth running of the code.
+3. The exclusion of non-emergency incidents from the dataset reduced the available data by more than 50%. This can be reviewed so that more data is available for analysis in the future.
+4. Disparity in the number of data points for the different hospitals. The number of data points available for the different hospitals varied a lot in the hospitals. A subset of the most significant hospitals was used for the project.
 
 
 ## Data Pipeline
 
 ![Data Pipeline for the modelling](docs/data_pipeline_c359.png)
+
+
+The data available for this project included:
+1. Details about incidents which an ambulance had attended, 
+2. Details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
+3. Details about patient transfers in, out and between hospitals
+
+The additional datasets that were used for the project included:
+1. UK Bank holidays data
+2. Weather data - Minimum temperature, Maximum temperature, Rainfall (mm)
+
+The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling . 
+
 The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
 
 ## Directory Structure
 
-A `project-directory` must first be created, inside of which this repository can be cloned (into e.g. `repo-directory`).
-
 ```
-repo-directory
-|__skunkworks-ambulance-queueing-prediction
-|    |__.github
-|    |__bin
-|    |__docs
-|    |__notebooks
-|    |__outputs
-|    |__src
-|    |   |__data
-|    |   |__features
-|    |   |__models
-|    |   |__visualisations
-|____|__requirements.txt
+skunkworks-ambulance-queueing-prediction
+    ├──.github
+    ├──bin
+    ├──docs
+    ├──notebooks
+    ├──outputs
+    ├──src
+    ├──data
+    ├──features
+    ├──models
+    ├──visualisations
+    └──requirements.txt
 
 ```
 
 ## Getting Started
+Note that `Python 3.9.12` was used for this project.
 
-1. Create a folder for this project, and clone this repository (`https://github.com/nhsx/skunkworks-ambulance-queueing-prediction`) as a subfolder of that folder e.g. `repo-directory` as above
-2. Switch to the `develop` branch: `git branch develop`
-3. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
-4. Activate your environment e.g., `pyenv activate ambulance-delays-project`
-5. Install required packages: `pip install -r requirements.txt`
-6. __Activate the git pre commit hook: pre-commit install__
-7. Execute notebooks in [notebooks/](notebooks)
-
-Please note that `python v3.9.12` was used for this project.
+1. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
+2. Activate your environment e.g., `pyenv activate ambulance-delays-project`
+3. Install required packages: `pip install -r requirements.txt`
+4. __Activate the git pre commit hook: pre-commit install__
+5. Execute notebooks in [notebooks/](notebooks)
 
 ### End to End Testing
 
-If you want to run through this project end-to-end, details on how to do this can be found in the [bin](bin/) directory.
+There is an end-to-end integration test available, contained in `bin`.
 
+In order to use it, once you have completed step 3 above, you need can then use the following instructions:
+
+If using PowerShell:
+
+```
+bin/run-all.ps1
+```
+
+If using bash:
+
+```
+sh bin/run-all.sh
+```
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
