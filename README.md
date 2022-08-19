@@ -103,6 +103,7 @@ skunkworks-ambulance-queueing-prediction
 ```
 
 ## Getting Started
+Note that `Python 3.9.12` was used for this project.
 
 1. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
 2. Activate your environment e.g., `pyenv activate ambulance-delays-project`
@@ -110,11 +111,22 @@ skunkworks-ambulance-queueing-prediction
 4. __Activate the git pre commit hook: pre-commit install__
 5. Execute notebooks in [notebooks/](notebooks)
 
-Please note that `python v3.9.12` was used for this project.
-
 ### End to End Testing
 
-If you want to run through this project end-to-end, details on how to do this can be found in the [bin](bin/) directory.
+There is an end-to-end integration test available, contained in `bin`.
+
+In order to use it, once you have completed step 3 above, you need can then use the following instructions:
+
+If using PowerShell:
+
+```
+bin/run-all.ps1
+```
+
+If using bash:
+
+```
+sh bin/run-all.sh
 
 
 ## NHS AI Lab Skunkworks
