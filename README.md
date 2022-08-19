@@ -52,17 +52,6 @@ Looking across an NHS trust, knowing where ambulances can handover patients to i
 
 ## Model Selection
 
-The data available for this project included:
-1. Details about incidents which an ambulance had attended, 
-2. Details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
-3. Details about patient transfers in, out and between hospitals
-
-The additional datasets that were used for the project included:
-1. UK Bank holidays data
-2. Weather data - Minimum temperature, Maximum temperature, Rainfall (mm)
-
-The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling . 
-
 The different approaches considered were as follows:
 1. Regression techniques
 2. Time Series Analysis
@@ -90,6 +79,18 @@ There were multiple limitations that were faced over the course of this project.
 ## Data Pipeline
 
 ![Data Pipeline for the modelling](docs/data_pipeline_c359.png)
+
+
+The data available for this project included:
+1. Details about incidents which an ambulance had attended, 
+2. Details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
+3. Details about patient transfers in, out and between hospitals
+
+The additional datasets that were used for the project included:
+1. UK Bank holidays data
+2. Weather data - Minimum temperature, Maximum temperature, Rainfall (mm)
+
+The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling . 
 
 The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
