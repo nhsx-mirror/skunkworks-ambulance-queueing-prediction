@@ -104,13 +104,11 @@ skunkworks-ambulance-queueing-prediction
 
 ## Getting Started
 
-
-1. Switch to the `develop` branch: `git branch develop`
-2. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
-3. Activate your environment e.g., `pyenv activate ambulance-delays-project`
-4. Install required packages: `pip install -r requirements.txt`
-5. __Activate the git pre commit hook: pre-commit install__
-6. Execute notebooks in [notebooks/](notebooks)
+1. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
+2. Activate your environment e.g., `pyenv activate ambulance-delays-project`
+3. Install required packages: `pip install -r requirements.txt`
+4. __Activate the git pre commit hook: pre-commit install__
+5. Execute notebooks in [notebooks/](notebooks)
 
 Please note that `python v3.9.12` was used for this project.
 
