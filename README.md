@@ -120,8 +120,7 @@ Note that `Python 3.9.12` was used for this project.
 1. Create a new virtual environment e.g., `pyenv virtualenv 3.9.12 ambulance-delays-project`
 2. Activate your environment e.g., `pyenv activate ambulance-delays-project`
 3. Install required packages: `pip install -r requirements.txt`
-4. __Activate the git pre commit hook: pre-commit install__
-5. Execute notebooks in [notebooks/](notebooks)
+4. Execute notebooks in [notebooks/](notebooks)
 
 ### End to End Testing
 
