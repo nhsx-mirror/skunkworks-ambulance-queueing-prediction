@@ -40,9 +40,9 @@ Looking across an NHS trust, knowing where ambulances can handover patients to i
 ## Model Selection
 
 The data available for this project included:
-1. details about incidents which an ambulance had attended, 
-2. details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
-3. details about patient transfers in, out and between hospitals
+1. Details about incidents which an ambulance had attended, 
+2. Details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
+3. Details about patient transfers in, out and between hospitals
 
 The additional datasets that were used for the project included:
 1. UK Bank holidays data
