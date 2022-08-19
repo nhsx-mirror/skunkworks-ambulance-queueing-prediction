@@ -101,15 +101,15 @@ The data dictionary is found [in the data dictionary notebook.](notebooks/00-dat
 ```
 skunkworks-ambulance-queueing-prediction
     ├──.github
-    ├──tests
     ├──docs
     ├──notebooks
     ├──outputs
     ├──src
-    ├──data
-    ├──features
-    ├──models
-    ├──visualisations
+        ├──data
+        ├──features
+        ├──models
+        ├──visualisations
+    ├──tests
     └──requirements.txt
 
 ```
