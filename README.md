@@ -97,7 +97,7 @@ The number of data points available for the different hospitals varied a lot in 
 The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
 
-## Directory Structure4
+## Directory Structure
 
 ```
 skunkworks-ambulance-queueing-prediction
@@ -140,7 +140,7 @@ If using bash:
 
 ```
 sh bin/run-all.sh
-
+```
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
