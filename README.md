@@ -89,19 +89,18 @@ The data dictionary is found [in the data dictionary notebook.](notebooks/00-dat
 A `project-directory` must first be created, inside of which this repository can be cloned (into e.g. `repo-directory`).
 
 ```
-repo-directory
-|__skunkworks-ambulance-queueing-prediction
-|    |__.github
-|    |__bin
-|    |__docs
-|    |__notebooks
-|    |__outputs
-|    |__src
-|    |   |__data
-|    |   |__features
-|    |   |__models
-|    |   |__visualisations
-|____|__requirements.txt
+skunkworks-ambulance-queueing-prediction
+    ├──.github
+    ├──bin
+    ├──docs
+    ├──notebooks
+    ├──outputs
+    ├──src
+    ├──data
+    ├──features
+    ├──models
+    ├──visualisations
+    └──requirements.txt
 
 ```
 
