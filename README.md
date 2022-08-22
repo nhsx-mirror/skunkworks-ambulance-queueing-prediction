@@ -4,14 +4,14 @@
 
 ![Banner of NHS AI Lab Skunkworks ](docs/banner.png)
 
-# NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor
+# NHS AI Lab Skunkworks project: Ambulance Handover Delay Predictor
 
-> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, C359 - NHS Ambulance Handover Delay Predictor, will use statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
+> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, Ambulance Handover Delay Predictor, uses statistical analysis and machine learning to understand whether AI approaches can be used to create a proactive response to the redirect of ambulances between hospitals on a given day in order to minimise the time spent waiting for patient handover and thereby maximise the time available to respond to patient calls for help
 
-C359 - NHS Ambulance Handover Delay Predictor was selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+Ambulance Handover Delay Predictor was selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
 # Table of contents
-- [NHS AI Lab Skunkworks project: C359 - NHS Ambulance Handover Delay Predictor](#nhs-ai-lab-skunkworks-project-c359---nhs-ambulance-handover-delay-predictor)
+- NHS AI Lab Skunkworks project: Ambulance Handover Delay Predictor
     - [Intended Use](#intended-use)
     - [Data Protection](#data-protection)
     - [Background](#background)
@@ -25,12 +25,7 @@ C359 - NHS Ambulance Handover Delay Predictor was selected as a project in Q2 20
 
 ## Intended Use
 
-This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate the technical validity of applying a Random Forest modelling technique to numerous datasets in order to solve the problem of ambulance delays while handing patients over to the emergency departments at hospitals. The data that were available for the project were:
-1. Ambulance assignments data
-2. Incidents data
-3. Patient transfers data
-
-It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
+This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate the technical validity of applying a Random Forest modelling technique to numerous datasets in order to solve the problem of ambulance delays while handing patients over to the emergency departments at hospitals. It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
 
 
 ## Data Protection
@@ -79,10 +74,13 @@ There were multiple limitations that were faced over the course of this project.
 
 ## Data Pipeline
 
-![Data Pipeline for the modelling](docs/data_pipeline_c359.png)
+The data that were available for the project were:
+1. Ambulance assignments data
+2. Incidents data
+3. Patient transfers data
 
+which included:
 
-The data available for this project included:
 1. Details about incidents which an ambulance had attended, 
 2. Details about ambulances that arrive at hospitals to hand over patients to emergency departments, and
 3. Details about patient transfers in, out and between hospitals
@@ -91,9 +89,11 @@ The additional datasets that were used for the project included:
 1. UK Bank holidays data
 2. Weather data - Minimum temperature, Maximum temperature, Rainfall (mm)
 
-The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling . 
+The data was cleaned and preprocessed in order to prepare the data for analysis and modelling. Some of the metrics derived were the handover time in minutes (and consequently handover delay), the euclidean distance between the hospitals, and the past delays in handing over patients. The correlations and trends in the data were investigated. The outcome of this investigation was considered before deciding on any modelling approaches. 
 
-The data dictionary is found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
+![Data Pipeline for the modelling](docs/data_pipeline_c359.png)
+
+The data dictionary can be found [in the data dictionary notebook.](notebooks/00-data_dictionary_notebook.ipynb)
 
 
 ## Directory Structure
@@ -108,7 +108,7 @@ skunkworks-ambulance-queueing-prediction
         ├──data
         ├──features
         ├──models
-        ├──visualisations
+        └──visualisations
     ├──tests
     └──requirements.txt
 
@@ -141,11 +141,11 @@ sh tests/run-all.sh
 ```
 
 ## NHS AI Lab Skunkworks
-The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
+The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab in the NHS Transformation Directorate to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
 
-Find out more about the [NHS AI Lab Skunkworks](https://www.nhsx.nhs.uk/ai-lab/ai-lab-programmes/skunkworks/).
+Find out more about the [NHS AI Lab Skunkworks]([https://www.nhsx.nhs.uk/ai-lab/ai-lab-programmes/skunkworks/](https://transform.england.nhs.uk/ai-lab/ai-lab-programmes/skunkworks/).
 Join our [Virtual Hub](https://future.nhs.uk/connect.ti/system/text/register) to hear more about future problem-sourcing event opportunities.
-Get in touch with the Skunkworks team at [aiskunkworks@nhsx.nhs.uk](aiskunkworks@nhsx.nhs.uk).
+Get in touch with the Skunkworks team at [england.aiskunkworks@nhs.net](england.aiskunkworks@nhs.net).
 
 
 ## Licence
