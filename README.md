@@ -21,7 +21,7 @@ Ambulance Handover Delay Predictor was selected as a project in Q2 2022 followin
     - [NHS AI Lab Skunkworks](#nhs-ai-lab-skunkworks)
     - [Licence](#licence)
 
-> The full [technical report (PDF)](add-link-here) is available to download.
+> A full [technical report (PDF)](docs/ambulance-queueing-prediction-technical-report.pdf) is available to download.
 
 ## Intended Use
 
