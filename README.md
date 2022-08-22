@@ -21,6 +21,7 @@ C359 - NHS Ambulance Handover Delay Predictor was selected as a project in Q2 20
     - [NHS AI Lab Skunkworks](#nhs-ai-lab-skunkworks)
     - [Licence](#licence)
 
+> The full [technical report (PDF)](add-link-here) is available to download.
 
 ## Intended Use
 
@@ -100,15 +101,15 @@ The data dictionary is found [in the data dictionary notebook.](notebooks/00-dat
 ```
 skunkworks-ambulance-queueing-prediction
     ├──.github
-    ├──bin
     ├──docs
     ├──notebooks
     ├──outputs
     ├──src
-    ├──data
-    ├──features
-    ├──models
-    ├──visualisations
+        ├──data
+        ├──features
+        ├──models
+        ├──visualisations
+    ├──tests
     └──requirements.txt
 
 ```
@@ -123,20 +124,20 @@ Note that `Python 3.9.12` was used for this project.
 
 ### End to End Testing
 
-There is an end-to-end integration test available, contained in `bin`.
+There is an end-to-end integration test available, contained in `tests`.
 
 In order to use it, once you have completed step 3 above, you need can then use the following instructions:
 
 If using PowerShell:
 
 ```
-bin/run-all.ps1
+tests/run-all.ps1
 ```
 
 If using bash:
 
 ```
-sh bin/run-all.sh
+sh tests/run-all.sh
 ```
 
 ## NHS AI Lab Skunkworks

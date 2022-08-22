@@ -5,11 +5,11 @@ Once you have installed this tool and activated your virtual environment, you ca
 If using PowerShell:
 
 ```
-bin/run-all.ps1
+tests/run-all.ps1
 ```
 
 If using bash:
 
 ```
-sh bin/run-all.sh
+sh tests/run-all.sh
 ```
