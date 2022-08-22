@@ -10,6 +10,8 @@
 
 Ambulance Handover Delay Predictor was selected as a project in Q2 2022 following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
+![Example of predictions](docs/handover-example.png)
+
 # Table of contents
 - NHS AI Lab Skunkworks project: Ambulance Handover Delay Predictor
     - [Intended Use](#intended-use)
