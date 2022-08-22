@@ -126,7 +126,7 @@ Note that `Python 3.9.12` was used for this project.
 
 There is an end-to-end integration test available, contained in `tests`.
 
-In order to use it, once you have completed step 3 above, you need can then use the following instructions:
+In order to use it, once you have completed step 3 above, you can then use the following instructions:
 
 If using PowerShell:
 
